@@ -1,0 +1,12 @@
+FROM python:3.9-slim-buster
+RUN apt update && \
+    apt install -y libsndfile1 ffmpeg libsm6 libxext6 libgl1 && \
+    apt clean
+
+WORKDIR /ser-docker
+COPY requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+CMD ["python3", "-u", "app.py"]
